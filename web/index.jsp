@@ -12,11 +12,11 @@
   </head>
   <body>
     <form action = "/TrendServlet" method = "GET">
-        <input type="text" name="screenname" id="screenname"/>
+        <label>Twitter handle: @</label><input type="text" name="screenname" id="screenname"/>
         <select name = "range">
-            <option value = "last 200 tweets">last 200 tweets</option>
-            <option value = "last 400 tweets">last 400 tweets</option>
-            <option value = "last 600 tweets">last 600 tweets</option>
+            <option value = "200">last 200 tweets</option>
+            <option value = "400">last 400 tweets</option>
+            <option value = "600">last 600 tweets</option>
         </select>
         <input type="submit" value="Submit" />
     </form>

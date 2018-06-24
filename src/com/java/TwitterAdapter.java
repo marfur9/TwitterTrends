@@ -46,7 +46,7 @@ class TwitterAdapter {
         return tweetDates;
     }
 
-    List<Status> getTimeline(String screenName) { //returns a list of tweets from the last xx minutes
+    List<Status> getTimeline(String screenName, int numTweets) { //returns a list of tweets from the last xx minutes
         List<Status> statuses = new ArrayList<>();
         try {
             //Get last 200 tweets from timeline and mentions
@@ -55,8 +55,18 @@ class TwitterAdapter {
             int numStatuses = user.getStatusesCount();
             System.out.println(numStatuses);
 
-            Paging paging = new Paging(1, 200);
-            statuses = twitter.getUserTimeline(screenName, paging);
+            Paging page1 = new Paging(1, 200);
+            Paging page2 = new Paging(2, 200);
+            Paging page3 = new Paging(3, 200);
+
+
+            statuses = twitter.getUserTimeline(screenName, page1);
+            if(numTweets >= 400) {
+                statuses.addAll(twitter.getUserTimeline(screenName, page2));
+            } if (numTweets >= 600){
+                statuses.addAll(twitter.getUserTimeline(screenName, page3));
+            }
+
             statuses = removeRetweeets(statuses);
 
         } catch (TwitterException te) {

@@ -22,7 +22,8 @@ public class TrendServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         TwitterAdapter twitterAdapter = new TwitterAdapter();
         String screenName = request.getParameter("screenname");
-        List<Status> statuses = twitterAdapter.getTimeline(screenName);
+        int numberOfTweets = Integer.parseInt(request.getParameter("range"));
+        List<Status> statuses = twitterAdapter.getTimeline(screenName, numberOfTweets);
         List<TweetDate> tweetDates = twitterAdapter.makeTweetDates(statuses);
         makeJSON(tweetDates, screenName);
         try {
@@ -34,7 +35,7 @@ public class TrendServlet extends HttpServlet {
         request.getRequestDispatcher("/WEB-INF/results.jsp").forward(request, response);
     }
 
-    void makeJSON(List<TweetDate> tweetDates, String screenName){
+    private void makeJSON(List<TweetDate> tweetDates, String screenName){
         JSONObject jsonTweetDatesTable = new JSONObject();
         JSONArray cols = new JSONArray();
         JSONObject col1 = new JSONObject();
